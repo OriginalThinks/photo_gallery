@@ -3,7 +3,7 @@ const { Schema, model } = require('mongoose');
 const Photo = new Schema({
     title: String,
     description: String,
-    imageUrl: String,
+    imageURL: String,
     public_id: String
 });
 

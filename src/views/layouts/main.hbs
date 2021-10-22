@@ -7,6 +7,9 @@
     <title>Photo Gallery</title>
     <!-- BOOTSTRAP -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/materia/bootstrap.min.css" integrity="sha384-B4morbeopVCSpzeC1c4nyV0d0cqvlSAfyXVfrPJa25im5p+yEN/YmhlgQP/OyMZD" crossorigin="anonymous">
+    <!-- SWIPER -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
+    <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
 </head>
 <body>
 
@@ -16,5 +19,29 @@
             {{{ body }}}
         </div>
 
+    <!-- SWIPER SCRIPTS -->
+    <script type="module">
+        import Swiper from 'https://unpkg.com/swiper@7/swiper-bundle.esm.browser.min.js'
+
+        const swiper = new Swiper(...)
+    </script>
+    <script>
+        var swiper = new Swiper(".mySwiper", {
+            effect: "coverflow",
+            grabCursor: true,
+            centeredSlides: true,
+            slidesPerView: "auto",
+            coverflowEffect: {
+            rotate: 50,
+            stretch: 0,
+            depth: 100,
+            modifier: 1,
+            slideShadows: true,
+            },
+            pagination: {
+            el: ".swiper-pagination",
+            },
+        });
+    </script>
 </body>
 </html>

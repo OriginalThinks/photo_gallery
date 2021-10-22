@@ -8,13 +8,16 @@ cloudinary.config({
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET
 });
+const fs = require('fs-extra');// Módulo nativo cuando instalamos node.js.fs no tiene soporte para las promesas.fs-extra sí lo tiene
 
-router.get('/', (req, res) => {
-    res.render('images');
+router.get('/', async (req, res) => {
+    const photos = await Photo.find();
+    res.render('images', {photos});
 })
 
-router.get('/images/add', (req, res) => {
-    res.render('image_form');
+router.get('/images/add', async (req, res) => {
+    const photos = await Photo.find();
+    res.render('image_form', {photos});
 })
 
 router.post('/images/add', async (req, res) => {
@@ -30,7 +33,16 @@ router.post('/images/add', async (req, res) => {
         public_id: result.public_id
     })
     await newPhoto.save();
-    res.send('received');
+    await fs.unlink(req.file.path);
+    res.redirect('/');
+});
+
+router.get('/images/delete/:photo_id', async (req, res) => {
+    const { photo_id } = req.params;
+    const photo = await Photo.findByIdAndDelete(photo_id);
+    const result = cloudinary.v2.uploader.destroy(photo.public_id);
+    console.log(result);
+    res.redirect('/images/add');
 })
 
 module.exports = router;
